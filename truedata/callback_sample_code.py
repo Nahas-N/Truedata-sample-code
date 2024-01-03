@@ -1,4 +1,4 @@
-from truedata import TD_live
+from truedata import TD_live , TD_hist
 import time
 import logging
 
@@ -9,7 +9,7 @@ port = 8088
 url = "pushbeta.truedata.in"
 
 td_obj = TD_live(username , password , live_port = port, log_level= logging.DEBUG )
-# td_obj = TD_live(username , password , url = url , live_port = 8088, log_level= logging.WARNING, full_feed = True )
+td_hist = TD_hist(username , password , log_level= logging.DEBUG )
 
 symbols = [ "BANKNIFTY-I" , "SBIN-I" , "SBIN" , "NIFTY-I"]
 td_obj.start_live_data(symbols)
@@ -42,6 +42,9 @@ def new_five_min_bar( bar_data):
 @td_obj.greek_callback
 def mygreek_bidask( greek_data):
     print(f"greek > " , greek_data)
+
+res = td_hist.get_historic_data('BANKNIFTY-I')
+print(res)
 
 # Keep your thread alive
 while True:
